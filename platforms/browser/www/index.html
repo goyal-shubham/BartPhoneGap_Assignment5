@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags-->
+    <meta http-equiv="Content-Security-Policy" content="font-src * data:;default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *; img-src * data: 'unsafe-inline'">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Your app title -->
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS, iOS Theme -->
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCYvVsJNzHxoApX6dy8BxmKimobNGUjtA"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script src="Controller/bart.js"></script>
+    <!--<script data-require="angular.js@1.1.5" data-semver="1.1.5" src="http://code.angularjs.org/1.1.5/angular.min.js"></script>-->
+    <script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
+    <script src="../node_modules/ngstorage/ngStorage.js"></script>
+    <!--<script>-->
+        <!--$(document).ready(function () {-->
+            <!--if (typeof(Storage) !== "undefined") {-->
+
+                <!--var counts = localStorage.getItem('count');-->
+                <!--var origin = localStorage.getItem('origin');-->
+                <!--var destination = localStorage.getItem('destination');-->
+                <!--if(origin) {-->
+                    <!--document.getElementById("origin").innerHTML-->
+                <!--}-->
+                <!--if (counts) {-->
+                    <!--localStorage.setItem('count', Number(counts) + 1);-->
+                <!--} else {-->
+                    <!--localStorage.setItem('count', 1);-->
+                <!--}-->
+                <!--document.getElementById("result").innerHTML = "Visit Count : " + localStorage.getItem('count') + " time(s).";-->
+            <!--} else {-->
+                <!--document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";-->
+            <!--}-->
+
+        <!--});-->
+    <!--</script>-->
+    <!--<script>-->
+        <!--function setOrigin(origin) {-->
+            <!--if (typeof(Storage) !== "undefined") {-->
+
+                <!--localStorage.setItem('origin', origin);-->
+
+            <!--} else {-->
+                <!--document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";-->
+            <!--}-->
+
+        <!--}-->
+    <!--</script>-->
+</head>
+<body ng-app="bart" ng-controller="uiController">
+<!-- Status bar overlay for full screen mode (PhoneGap) -->
+<div class="statusbar-overlay"></div>
+<!-- Views -->
+<div class="views">
+    <!-- Your main view, should have "view-main" class -->
+    <div class="views">
+        <div class="view view-main">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="left"></div>
+                    <div class="center">Bart Guide</div>
+                    <div class="right"></div>
+                    <!-- Sub navbar -->
+                    <div class="subnavbar">
+                        <div class="buttons-row">
+                            <a href="#tab1" class="button tab-link active">About</a>
+                            <a href="#tab2" class="button tab-link">Stations</a>
+                            <a href="#tab3" class="button tab-link">Trips</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pages navbar-through">
+                <!-- Pag has additional "with-subnavbar" class -->
+                <div data-page="home" class="page with-subnavbar">
+                    <div class="page-content hide-bars-on-scroll">
+                        <div class="tabs">
+                            <div id="tab1" class="tab active">
+                                <div class="content-block">
+                                    <div class="content-block-inner">
+
+                                        BART is a public transportation system serving the San Francisco Bay Area. The
+                                        rapid transit elevated and subway system connects San Francisco with cities in
+                                        Alameda, Contra Costa, and San Mateo counties. BART operates 5 routes on 104
+                                        miles (167 km) of track connecting 44 stations, plus a 3.2-mile (5.1 km)
+                                        automated guideway transit line to the Oakland International Airport which adds
+                                        a 45th station. A spur line in eastern Contra Costa County will utilize other
+                                        rail technologies. With an average of 433,000 weekday passengers and 128.5
+                                        million annual passengers in fiscal year 2016,[7] BART is the fifth-busiest
+                                        heavy rail rapid transit system in the United States. The system's acronym is
+                                        pronounced "Bart," like the name, and not as a spelled-out initialism (i.e.,
+                                        "B-A-R-T").
+                                    </div>
+
+                                    <!-- This block will be inset only on tablets -->
+                                    <div class="content-block tablet-inset">
+                                        <div class="content-block-inner">
+                                            <aside>
+                                                You can use this service for :
+                                                <ui>
+                                                    <li>
+                                                        Getting Station Details.
+                                                    </li>
+                                                    <li>
+                                                        Real Time Departures from any Stations.
+                                                    </li>
+                                                </ui>
+
+                                                <br/>
+                                                <br/>
+                                                <section class="media-body text-justify">
+                                                    Same origin policy applies whenever we use 3rd party APIs from
+                                                    browser using
+                                                    HTTP request. Therefore my server endpoints are providing access to
+                                                    BART API
+                                                    on the same domain. Because of this reason my UI codes for
+                                                    Javascript is
+                                                    able to make HTTP request to my endpoints which are hosted in the
+                                                    same host.
+                                                    Hence they are following Same origin policy.
+                                                </section>
+                                            </aside>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="tab2" class="tab ">
+                                <div class="content-block">
+                                    <div class="btn-group col-lg-4 btn-group-justified btn-block">
+                                        <div class="btn-group-vertical" align="center">
+
+
+                                            <select class="color-black button" ng-model="selected"
+                                                    ng-options="x as x.name for x in resultGet"  ng-change="showStationDetails(selected.abbr)">
+                                                <option value="" selected disabled>Choose Station</option>
+                                            </select>
+
+                                            <!--<button type="button" ng-click="store.showStationDetails(resultGet[i].abbr)" class="btn btn-outline btn-default">{{resultGet[i].name}}</button>-->
+                                            <!--<button type="button" class="btn btn-outline btn-info">{{resultGet[i + 1].name}}</button>-->
+                                            <!--<button type="button" class="btn btn-outline btn-info">{{resultGet[i + 2].name}}</button>-->
+
+                                            <div class="list-block" ng-show="selected">
+                                                <ul>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Name</div>
+                                                            <div class="item-after">{{stationDetail.name[0]}}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Address</div>
+                                                            <div class="item-after">{{stationDetail.address[0]}}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">City</div>
+                                                            <div class="item-after">{{stationDetail.city[0]}}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">County</div>
+                                                            <div class="item-after">{{stationDetail.county[0]}}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">State</div>
+                                                            <div class="item-after">{{stationDetail.state[0]}}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Zip Code</div>
+                                                            <div class="item-after">{{stationDetail.zipcode[0]}}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Latitude</div>
+                                                            <div class="item-after">{{stationDetail.gtfs_latitude[0]}}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Longitude</div>
+                                                            <div class="item-after">
+                                                                {{stationDetail.gtfs_longitude[0]}}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Link</div>
+                                                            <div class="item-after"><a href={{stationDetail.link[0]}}>{{stationDetail.name[0]}}</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab3" class="tab">
+                                <div class="content-block" align="center">
+
+
+                                    <select class="color-black button" ng-model="previousOrigin"
+                                            ng-init="previousOrigin='ASHB' " ng-change="setOriginStation(previousOrigin) ">
+                                        <option value="" disabled selected>Source Station</option>
+                                        <option value="{{x.abbr[0]}}" ng-repeat="x in resultGet">{{x.name[0]}}</option>
+                                    </select>
+
+                                    <br>
+
+                                    <select class="color-black button" ng-model="previousDestination" ng-change="setDestinationStation(previousDestination) ">
+                                        <option value="" disabled selected>Destination Station</option>
+                                        <option value="{{x.abbr[0]}}" ng-repeat="x in resultGet">{{x.name[0]}}</option>
+                                    </select>
+
+
+                                    <div class="card" ng-show="timeFound">
+                                        <div class="card-content">
+                                            <div class="card-content-inner">
+                                                <div class="list-block">
+                                                    <ul id="countdownTimer">
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <p ng-show="timeFound">Time till Next Train
+                                                                    {{counter|formatTimer}} </p>
+                                                                <p id="noTrain" ng-show="noTrainFound">No train found
+                                                                    After this time</p>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="row">-->
+                                    <!--<section id="countdownTimer" >-->
+                                    <!--<p ng-show="timeFound">Time till Next Train {{counter|formatTimer}} </p>-->
+                                    <!--<p id="noTrain" ng-show="noTrainFound">No train found After this time</p>-->
+                                    <!--</section>-->
+                                    <!--</div>-->
+
+                                    <div class="card" ng-repeat="x in route.root.schedule[0].request[0].trip">
+                                        <div class="card-content">
+                                            <div class="card-content-inner">
+                                                <div class="list-block">
+                                                    <ul>
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <div class="item-title">Departure Time</div>
+                                                                <div class="item-after">{{x.$.origTimeMin}}</div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <div class="item-title">Departure Date</div>
+                                                                <div class="item-after">{{x.$.origTimeDate}}</div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <div class="item-title">Arrival Time</div>
+                                                                <div class="item-after">{{x.$.destTimeMin}}</div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <div class="item-title">Arrival Date</div>
+                                                                <div class="item-after">{{x.$.destTimeDate}}</div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <div class="item-title">Fare</div>
+                                                                <div class="item-after">{{x.$.fare}}</div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="item-content">
+                                                            <div class="item-inner">
+                                                                <div class="item-title">Travel Time</div>
+                                                                <div class="item-after">{{x.$.tripTime}}</div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div class="footer-basic-centered">
+            <p class="text-center text-muted">© 2017 - BART Guide. Made by <a href="https://www.linkedin.com/in/sgoyal1/">Shubham Goyal</a></p>
+            <p align="right" id="result"></p>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
